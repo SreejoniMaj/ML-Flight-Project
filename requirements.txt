@@ -1,0 +1,16 @@
+flask
+pandas 
+flask_sqlalchemy 
+from sqlalchemy 
+
+datetime
+numpy
+matplotlib
+seaborn
+scikit-learn
+scipy
+six
+virtualenv
+Jinja2
+python-dateutil
+pymysql
