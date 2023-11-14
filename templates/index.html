@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+
+    <title>FlyHigh Home</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='apple-touch-icon.png')}}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-theme.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fontAwesome.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/hero-slider.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl-carousel.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/datepicker.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+
+    <script src="{{ url_for('static', filename='js/vendor/modernizr-2.8.3-respond-1.4.2.min.js')}}"></script>
+</head>
+
+<body>
+
+    <section class="banner" id="top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="left-side">
+                        <div class="logo">
+                            <img src="{{ url_for('static', filename='img/logo.png')}}" alt="Flight Template">
+                        </div>
+                        <div class="tabs-content">
+                            <h4>FLY HIGH AIRLINES</h4>
+                            <p style="color: #ffffff;">
+                               Hi  {{ session.name }} 
+                               <br>Welcome to Fly High. We are here to offer
+                                you the best prediction about your flight.</p>
+                            <ul>
+                                <span class="page-direction-button">
+                                    <li><a href="aboutus"><i class="fa fa-book"></i>About Us</a></li>
+                                </span>
+                                <br>
+                               
+                                <span class="page-direction-button">
+                                    <li><a href="contact"><i class="fa fa-phone"></i>Contact Us Now</a></li>
+                                </span>
+                                <br>
+                               
+                                <span class="page-direction-button">
+                                    <li><a href="\logout"><i class="fa fa-phone"></i>LOG OUT</a></li>
+                                </span>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-5 col-md-offset-1">
+                    <div class="submit-form col-md-12">
+                        <h3>{{lmsg}}
+                        </h3>
+                        <h4>Check price for <em>direction</em>:</h4>
+                        <div class="col-md-12 col-lg-12">
+                            <div class="col-lg-12 text-start text-lg-end align-items-end wow slideInRight"
+                                data-wow-delay="0.1s">
+                                <div role="tabpanel">
+                                    <!-- Nav tabs -->
+                                    <ul class="nav nav-tabs col-md-12" role="tablist">
+                                        <li role="presentation" class="active col-md-6"><a style="color:#000"
+                                                href="#one_way" aria-controls="one_way" role="tab" data-toggle="tab">One
+                                                Way</a></li>
+                                        <li role="presentation" class="col-md-6 "><a style="color:#000"
+                                                href="#round_trip" aria-controls="round_trip" role="tab"
+                                                data-toggle="tab" >Round Trip</a></li>
+                                    </ul>
+
+                                    <!-- Tab panes -->
+                                    <div class="tab-content ">
+                                        <div role="tabpanel" class="tab-pane active " id="one_way">
+                                            <form id="form-submit" action="\predict" method="post">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <fieldset>
+                                                            <label for="from">From:</label>
+                                                            <select required name='from' >
+                                                                <option value="">Select a location...</option>
+                                                                <option value="Bangalore">Bangalore</option>
+                                                                <option value="Kolkata">Kolkata</option>
+                                                                <option value="Delhi">Delhi</option>
+                                                                <option value="Chennai">Chennai</option>
+                                                                <option value="Mumbai">Mumbai</option>
+                                                            </select>
+                                                        </fieldset>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <fieldset>
+                                                            <label for="to">To:</label>
+                                                            <select required name='to' onchange="">
+                                                                <option value="">Select a location...</option>
+                                                                <option value="Bangalore">Bangalore</option>
+                                                                <option value="Kolkata">Kolkata</option>
+                                                                <option value="Delhi">Delhi</option>
+                                                                <option value="Chennai">Chennai</option>
+                                                                <option value="Mumbai">Mumbai</option>
+                                                            </select>
+                                                        </fieldset>
+                                                    </div>
+        
+                                                    <div class="col-md-6">
+                                                        <fieldset>
+                                                            <label for="deparure">Departure date:</label>
+                                                            <input name="deparure" type="text" class="form-control date"
+                                                                id="deparure" placeholder="Select date..." required>
+                                                        </fieldset>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <fieldset disabled>
+                                                            <label for="return">Return date:</label>
+                                                            <input name="return" type="text" class="form-control date"
+                                                                id="return" placeholder="N-A" required>
+                                                        </fieldset>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <select name="airline" id="airline" class="form-select ">
+                                                            <option selected>Airlines</option>
+                                                            <option value="Indigo">Indigo</option>
+                                                            <option value="Jet Airways">Jet Airways</option>
+                                                            <option value="Air India">Air India</option>
+                                                            <option value="SpiceJet">SpiceJet</option>
+                                                            <option value="GoAir">GoAir</option>
+                                                            <option value="Vistara">Vistara</option>
+                                                            <option value="Air Asia">Air Asia</option>
+                                                            <option value="Vistara Premium Economy">Vistara Premium
+                                                                Economy</option>
+                                                            <option value="Jet Airways Business">Jet Airways Business
+                                                            </option>
+                                                            <option value="Trujet">Trujet</option>
+                                                            <option value="Multiple Carriers">Multiple Carriers</option>
+                                                            <option value="Multiple Carriers Premium Economy">Multiple
+                                                                Carriers Premium Economy</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <select  name="stops" id="stops" class="form-select">
+                                                            <option selected>Number of Total Stops</option>
+                                                            <option value="0">Non-Stop</option>
+                                                            <option value="1">1 stop</option>
+                                                            <option value="2">2 stops</option>
+                                                            <option value="3">3 stops</option>
+                                                            <option value="4">4 stops</option>
+                                                        </select>
+                                                    </div>
+                                                    <div>
+                                                        <select class="form-select" name="addi" id="addi">
+                                                            <option selected>Additional Information</option>
+                                                            <option value="no-info">No Information</option>
+                                                            <option value="no-meal">In flight Meal not included</option>
+                                                            <option value="no-baggage">No check-in baggage included
+                                                            </option>
+                                                            <option value="1-long-layover">1 long layover</option>
+                                                            <option value="2-long-layover">2 long layovers</option>
+                                                            <option value="change-airport">Changing Airport</option>
+                                                            <option value="business-class">Business Class</option>
+                                                            <option value="Red-eye flight">Red-eye flight</option>
+                                                        </select>
+                                                    </div>
+
+                                                </div>
+                                                <div>
+                                                    <fieldset>
+                                                        <button type="submit" id="form-submit" class="btn">Check Price
+                                                            </button>
+                                                    </fieldset>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane " id="round_trip">
+                                            <form id="form-submit" action="\predictr" method="post">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <fieldset>
+                                                            <label for="fromr">From:</label>
+                                                            <select id="fromr" required name='fromr' onchange="">
+                                                                <option value="">Select a location...</option>
+                                                                <option value="Bangalore">Bangalore</option>
+                                                                <option value="Kolkata">Kolkata</option>
+                                                                <option value="Delhi">Delhi</option>
+                                                                <option value="Chennai">Chennai</option>
+                                                                <option value="Mumbai">Mumbai</option>
+                                                            </select>
+                                                        </fieldset>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <fieldset>
+                                                            <label for="tor">To:</label>
+                                                            <select id="tor" required name='tor' onchange="">
+                                                                <option value="">Select a location...</option>
+                                                                <option value="Bangalore">Bangalore</option>
+                                                                <option value="Kolkata">Kolkata</option>
+                                                                <option value="Delhi">Delhi</option>
+                                                                <option value="Chennai">Chennai</option>
+                                                                <option value="Mumbai">Mumbai</option>
+                                                            </select>
+                                                        </fieldset>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <fieldset>
+                                                            <label for="departure">Departure date:</label>
+                                                            <input name="deparure" type="text" class="form-control date"
+                                                                id="deparure" placeholder="Select date..." required=""
+                                                                onchange="">
+                                                        </fieldset>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <fieldset>
+                                                            <label for="return">Return date:</label>
+                                                            <input name="return" type="text" class="form-control date"
+                                                                id="return" placeholder="Select date..." required=""
+                                                                onchange="">
+                                                        </fieldset>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <select name="airline" id="airline" class="form-select ">
+                                                            <option selected>Airlines</option>
+                                                            <option value="Indigo">Indigo</option>
+                                                            <option value="Jet Airways">Jet Airways</option>
+                                                            <option value="Air India">Air India</option>
+                                                            <option value="SpiceJet">SpiceJet</option>
+                                                            <option value="GoAir">GoAir</option>
+                                                            <option value="Vistara">Vistara</option>
+                                                            <option value="Air Asia">Air Asia</option>
+                                                            <option value="Vistara Premium Economy">Vistara Premium
+                                                                Economy</option>
+                                                            <option value="Jet Airways Business">Jet Airways Business
+                                                            </option>
+                                                            <option value="Trujet">Trujet</option>
+                                                            <option value="Multiple Carriers">Multiple Carriers</option>
+                                                            <option value="Multiple Carriers Premium Economy">Multiple
+                                                                Carriers Premium Economy</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <select class="form-select" name="stops" id="stops" >
+                                                            <option selected>Number of Total Stops</option>
+                                                            <option value="0">Non-Stop</option>
+                                                            <option value="1">1 stop</option>
+                                                            <option value="2">2 stops</option>
+                                                            <option value="3">3 stops</option>
+                                                            <option value="4">4 stops</option>
+                                                        </select>
+                                                    </div>
+                                                    <div>
+                                                        <select class="form-select" name="addi" id="addi">
+                                                            <option selected>Additional Information</option>
+                                                            <option value="no-info">No Information</option>
+                                                            <option value="no-meal">In flight Meal not included</option>
+                                                            <option value="no-baggage">No check-in baggage included
+                                                            </option>
+                                                            <option value="1-long-layover">1 long layover</option>
+                                                            <option value="2-long-layover">2 long layovers</option>
+                                                            <option value="change-airport">Changing Airport</option>
+                                                            <option value="business-class">Business Class</option>
+                                                            <option value="Red-eye flight">Red-eye flight</option>
+                                                        </select>
+                                                    </div>
+
+                                                </div>
+                                                <div>
+                                                    <fieldset>
+                                                        <button type="submit" id="form-submit" class="btn">Check Price
+                                                            </button>
+                                                    </fieldset>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                        <div>
+                                            <h3 style="text-align: center; background-color: #ffe165; "><b>{{ Predictive_text }}</b></h3>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+
+
+ 
+
+
+
+    <script>window.jQuery || document.write('<script src="{{ url_for('static', filename='js/vendor/jquery-1.11.2.min.js')}}"><\/script>')</script>
+
+    <script src="{{ url_for('static', filename='js/vendor/bootstrap.min.js')}}"></script>
+
+    <script src="{{ url_for('static', filename='js/datepicker.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/plugins.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/main.js')}}"></script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+
+            // navigation click actions 
+            $('.scroll-link').on('click', function (event) {
+                event.preventDefault();
+                var sectionID = $(this).attr("data-id");
+                scrollToID('#' + sectionID, 750);
+            });
+            // scroll to top action
+            $('.scroll-top').on('click', function (event) {
+                event.preventDefault();
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+            });
+            // mobile nav toggle
+            $('#nav-toggle').on('click', function (event) {
+                event.preventDefault();
+                $('#main-nav').toggleClass("open");
+            });
+        });
+        // scroll function
+        function scrollToID(id, speed) {
+            var offSet = 0;
+            var targetOffset = $(id).offset().top - offSet;
+            var mainNav = $('#main-nav');
+            $('html,body').animate({ scrollTop: targetOffset }, speed);
+            if (mainNav.hasClass("open")) {
+                mainNav.css("height", "1px").removeClass("in").addClass("collapse");
+                mainNav.removeClass("open");
+            }
+        }
+        if (typeof console === "undefined") {
+            console = {
+                log: function () { }
+            };
+        }
+    </script>
+    
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="primary-button">
+                        <a href="#" class="scroll-top">Back To Top</a>
+                    </div>
+                    
+                </div>
+                <div class="col-md-12">
+                    <ul class="social-icons">
+                        <li><a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="https://www.twitter.com/"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://www.linkedin.com/"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-12">
+                    <p>Copyright &copy;FlyHigh
+
+
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+
+</html>            
